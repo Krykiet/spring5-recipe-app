@@ -17,9 +17,11 @@ public class Recipe {
     private String source;
     private String url;
     private String directions;
-    // TODO add
-    // private Difficulty difficulty;
 
+    // Cascade on the side of the recipe
+    // When we delete Notes we don't want to delete Recipe
+    @OneToOne(cascade = CascadeType.ALL)
+    private Notes notes;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe") // target property for many Ingredient
     private Set<Ingredient> ingredients;
 
@@ -28,10 +30,8 @@ public class Recipe {
 
     @Enumerated(value = EnumType.STRING)
     private Difficulty difficulty; // enum
-    // Cascade on the side of the recipe
-    // When we delete Notes we don't want to delete Recipe
-    @OneToOne(cascade = CascadeType.ALL)
-    private Notes notes;
+
+
 
     @ManyToMany
     // Need to set JoinTable to prevent H2 to create two tables: recipe_categories and category_recipes
