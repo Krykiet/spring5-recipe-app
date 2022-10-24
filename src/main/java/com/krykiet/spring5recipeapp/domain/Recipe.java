@@ -26,13 +26,21 @@ public class Recipe {
     @Lob // Binary large object - BLOB
     private byte[] image;
 
+    @Enumerated(value = EnumType.STRING)
+    private Difficulty difficulty; // enum
     // Cascade on the side of the recipe
     // When we delete Notes we don't want to delete Recipe
     @OneToOne(cascade = CascadeType.ALL)
     private Notes notes;
 
-    @Enumerated(value = EnumType.STRING)
-    private Difficulty difficulty; // enum
+    @ManyToMany
+    // Need to set JoinTable to prevent H2 to create two tables: recipe_categories and category_recipes
+    // Also need to set (mappedBy = "categories" on the other side)
+    @JoinTable(name = "recipe_category", // Name of table
+            joinColumns = @JoinColumn(name = "recipe_id"), // Name of columns
+            inverseJoinColumns = @JoinColumn(name = "category_id")) // Name of columns
+    // Other side mapped by this:
+    private Set<Category> categories;
 
     public Difficulty getDifficulty() {
         return difficulty;
@@ -128,5 +136,13 @@ public class Recipe {
 
     public void setIngredients(Set<Ingredient> ingredients) {
         this.ingredients = ingredients;
+    }
+
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
     }
 }
