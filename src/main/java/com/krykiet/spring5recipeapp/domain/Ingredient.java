@@ -24,16 +24,16 @@ public class Ingredient {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public UnitOfMeasure getUom() {
         return uom;
     }
 
     public void setUom(UnitOfMeasure uom) {
         this.uom = uom;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getDescription() {
