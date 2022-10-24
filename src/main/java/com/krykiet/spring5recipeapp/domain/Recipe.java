@@ -1,6 +1,7 @@
 package com.krykiet.spring5recipeapp.domain;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -16,6 +17,8 @@ public class Recipe {
     private Integer servings;
     private String source;
     private String url;
+
+    @Lob
     private String directions;
 
     // Cascade on the side of the recipe
@@ -23,7 +26,7 @@ public class Recipe {
     @OneToOne(cascade = CascadeType.ALL)
     private Notes notes;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe") // target property for many Ingredient
-    private Set<Ingredient> ingredients;
+    private Set<Ingredient> ingredients = new HashSet<>();
 
     @Lob // Binary large object - BLOB
     private byte[] image;
@@ -40,7 +43,7 @@ public class Recipe {
             joinColumns = @JoinColumn(name = "recipe_id"), // Name of columns
             inverseJoinColumns = @JoinColumn(name = "category_id")) // Name of columns
     // Other side mapped by this:
-    private Set<Category> categories;
+    private Set<Category> categories = new HashSet<>();
 
     public Difficulty getDifficulty() {
         return difficulty;
