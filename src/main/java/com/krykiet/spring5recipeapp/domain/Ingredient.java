@@ -13,13 +13,23 @@ public class Ingredient {
     private String description;
     private BigDecimal amount;
 
-    // private UnitOfMeasure uom;
+    // Not sure if mappedBy = "ingredient" is necessary
+    @OneToOne(fetch = FetchType.EAGER)
+    private UnitOfMeasure uom;
 
     @ManyToOne
     private Recipe recipe; // This needs to be @ManyToOne
 
     public Long getId() {
         return id;
+    }
+
+    public UnitOfMeasure getUom() {
+        return uom;
+    }
+
+    public void setUom(UnitOfMeasure uom) {
+        this.uom = uom;
     }
 
     public void setId(Long id) {
