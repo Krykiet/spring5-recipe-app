@@ -1,6 +1,7 @@
 package com.krykiet.spring5recipeapp.domain;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Recipe {
@@ -11,13 +12,16 @@ public class Recipe {
 
     private String description;
     private Integer prepTime;
-    private Integer cooktime;
+    private Integer cookTime;
     private Integer servings;
     private String source;
     private String url;
     private String directions;
     // TODO add
     // private Difficulty difficulty;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe") // target property for many Ingredient
+    private Set<Ingredient> ingredients;
 
     @Lob // Binary large object - BLOB
     private byte[] image;
@@ -51,12 +55,12 @@ public class Recipe {
         this.prepTime = prepTime;
     }
 
-    public Integer getCooktime() {
-        return cooktime;
+    public Integer getCookTime() {
+        return cookTime;
     }
 
-    public void setCooktime(Integer cooktime) {
-        this.cooktime = cooktime;
+    public void setCookTime(Integer cookTime) {
+        this.cookTime = cookTime;
     }
 
     public Integer getServings() {
@@ -105,5 +109,13 @@ public class Recipe {
 
     public void setNotes(Notes notes) {
         this.notes = notes;
+    }
+
+    public Set<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(Set<Ingredient> ingredients) {
+        this.ingredients = ingredients;
     }
 }
