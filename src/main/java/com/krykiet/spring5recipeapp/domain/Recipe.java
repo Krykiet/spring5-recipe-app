@@ -25,6 +25,7 @@ public class Recipe {
     // When we delete Notes we don't want to delete Recipe
     @OneToOne(cascade = CascadeType.ALL)
     private Notes notes;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe") // target property for many Ingredient
     private Set<Ingredient> ingredients = new HashSet<>();
 
