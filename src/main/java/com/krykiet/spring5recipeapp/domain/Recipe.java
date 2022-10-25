@@ -35,16 +35,13 @@ public class Recipe {
     @Enumerated(value = EnumType.STRING)
     private Difficulty difficulty; // enum
 
-
-
-    @ManyToMany
     // Need to set JoinTable to prevent H2 to create two tables: recipe_categories and category_recipes
     // Also need to set (mappedBy = "categories" on the other side)
+    @ManyToMany
     @JoinTable(name = "recipe_category", // Name of table
             joinColumns = @JoinColumn(name = "recipe_id"), // Name of columns
             inverseJoinColumns = @JoinColumn(name = "category_id")) // Name of columns
-    // Other side mapped by this:
-    private Set<Category> categories = new HashSet<>();
+    private Set<Category> categories = new HashSet<>(); // Other side mapped by this
 
     public Difficulty getDifficulty() {
         return difficulty;
