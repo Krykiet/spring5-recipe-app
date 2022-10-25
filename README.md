@@ -15,6 +15,8 @@ http://localhost:8080/h2-console/
 url: jdbc:h2:mem:testdb
 
 Important:
-To use data.sql file (default format for Spring Data JPA data initialization) following line is necessary in application.properties:
+To use data.sql file (default format for Spring Data JPA data initialization) following line:
 
 `spring.jpa.defer-datasource-initialization=true`
+
+ is necessary in `application.properties`.
