@@ -1,4 +1,3 @@
-# spring5-recipe-app
 # Spring web application for recipe storage
 
 ## Dependencies:
