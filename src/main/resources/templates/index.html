@@ -2,19 +2,54 @@
 <html lang="en" xmlns:th="http:www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+
     <title>Recipe Home</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+          crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+            crossorigin="anonymous"></script>
 </head>
 <body>
-<h2>My recipes!</h2>
-<table>
-    <tr>
-        <th>ID</th>
-        <th>Description</th>
-    </tr>
-    <tr th:each="recipe : ${recipes}">
-        <td th:text="${recipe.id}">123</td>
-        <td th:text="${recipe.description}">Tasty Goodness</td>
-    </tr>
-</table>
+
+
+<div class="container-fluid" style="margin-top: 20px" > <!--Containter-->
+    <div class="row justify-content-center">                                   <!--Row-->
+        <div class="col-md-6">          <!--12 column grid, offset by 3 (3+6+3)-->
+            <div class="card" style="width: 32rem;">           <!--Rounded panel-->
+
+                <div class="card-header">             <!--Blue block around Recipes-->
+                    <h2 class="card-title">My Recipes!</h2> <!--Styling of text-->
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive" th:if="${not #lists.isEmpty(recipes)}">
+                        <table class="table table-hover ">
+                            <thead class="thead-inverse">
+                            <tr>
+                                <th>ID</th>
+                                <th>Description</th>
+                            </tr>
+                            </thead>
+                            <tr th:remove="all"> <!--This is removed when executed, only for styling-->
+                                <td th:text="${recipe.id}">123</td>
+                                <td th:text="${recipe.description}">Tasty goodness 1</td>
+                            </tr>
+                            <tr th:remove="all"> <!--This is removed when executed, only for styling-->
+                                <td th:text="${recipe.id}">123</td>
+                                <td th:text="${recipe.description}">Tasty goodness 1</td>
+                            </tr>
+                            <tr th:each="recipe: ${recipes}">
+                                <td th:text="${recipe.id}">123</td>
+                                <td th:text="${recipe.description}">Tasty goodness 1</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

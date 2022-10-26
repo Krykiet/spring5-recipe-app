@@ -1,8 +1,16 @@
 package com.krykiet.spring5recipeapp.domain;
 
+import lombok.*;
+import org.hibernate.Hibernate;
+
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Entity
 public class Category {
 
@@ -11,30 +19,20 @@ public class Category {
     private Long id;
     private String description;
 
-    @ManyToMany(mappedBy = "categories") // Set<Category> categories from recipe
+    @ManyToMany(mappedBy = "categories")
+    @ToString.Exclude // Set<Category> categories from recipe
     private Set<Recipe> recipes;
 
-    public Long getId() {
-        return id;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Category category = (Category) o;
+        return id != null && Objects.equals(id, category.id);
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Set<Recipe> getRecipes() {
-        return recipes;
-    }
-
-    public void setRecipes(Set<Recipe> recipes) {
-        this.recipes = recipes;
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }
