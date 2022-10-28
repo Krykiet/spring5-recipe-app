@@ -19,3 +19,5 @@ To use data.sql file (default format for Spring Data JPA data initialization) fo
 `spring.jpa.defer-datasource-initialization=true`
 
  is necessary in `application.properties`.
+
+Simple change to test Circle CI
