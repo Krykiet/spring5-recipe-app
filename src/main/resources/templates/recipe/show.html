@@ -20,7 +20,7 @@
   <div class="row">
     <div class="col"></div>
     <div class="col">
-      <div class="card" style="width: 32rem">
+      <div class="card" style="width: 42rem">
         <div class="card-header">
           <h5 class="card-title" th:text="${recipe.description}">Card title</h5>
         </div>
@@ -31,7 +31,7 @@
             </div>
             <div class="col"> <!--"col-md-9"-->
               <ul th:each="category: ${recipe.categories}">
-                <li th:text="${category.description}">Categories</li>
+                <li th:text="${category.getDescription()}">Categories</li>
               </ul>
             </div>
           </div>
@@ -60,26 +60,28 @@
               <b>Servings:</b>
             </div>
             <div class="col"> <!--"col-md-9"-->
-              <p th:text="${recipe.servings}">Difficulty</p>
+              <p th:text="${recipe.servings}">Servings</p>
             </div>
           </div>
           <div class="row">
-            <div class="col"> <!--"col-md-3"-->
+            <div class="col-md-3"> <!--"col-md-3"-->
               <b>Source:</b>
             </div>
-            <div class="col"> <!--"col-md-9"-->
-              <p th:text="${recipe.source} + ' min'">Time</p>
+            <div class="col-md-3"> <!--"col-md-9"-->
+              <p th:text="${recipe.source}">Recipe source</p>
             </div>
-            <div class="col"> <!--"col-md-3"-->
+          </div>
+          <div class="row">
+            <div class="col-md-3"> <!--"col-md-3"-->
               <b>URL:</b>
             </div>
             <div class="col"> <!--"col-md-9"-->
-              <p th:text="${recipe.url}">Difficulty</p>
+              <a href="#" th:text="${recipe.url}">URL</a>
             </div>
           </div>
         </div>
       </div>
-      <div class="card" style="width: 32rem; margin-top: 20px;">
+      <div class="card" style="width: 42rem; margin-top: 20px;">
         <div class="card-header">
           <h5 class="card-title" th:text="'Ingredients'">Ingredients title</h5>
         </div>
@@ -91,7 +93,7 @@
           </ul>
         </div>
       </div>
-      <div class="card" style="width: 32rem; margin-top: 20px;">
+      <div class="card" style="width: 42rem; margin-top: 20px;">
         <div class="card-header">
           <h5 class="card-title" th:text="'Directions'">Directions title</h5>
         </div>
