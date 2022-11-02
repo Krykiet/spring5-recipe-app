@@ -24,7 +24,7 @@ public class RecipeServiceImpl implements RecipeService {
         // TODO rewrite this
         log.debug("Service logger");
         //recipeRepository.findAll().iterator().forEachRemaining(recipeSet::add);
-        recipeRepository.findAll().forEach(recipe -> recipeSet.add(recipe));
+        recipeRepository.findAll().forEach(recipeSet::add);
         return recipeSet;
     }
 }
