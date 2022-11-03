@@ -86,10 +86,11 @@
           <h5 class="card-title" th:text="'Ingredients'">Ingredients title</h5>
         </div>
         <div class="card-body">
-          <ul th:each="ingredient: ${recipe.ingredients}">
-            <li th:text="${ingredient.amount} +' '
-                + ${ingredient.uom.description} +' of '
-                + ${ingredient.description}">Ingredient desc</li>
+          <ul>
+            <li th:each="ingredient : ${recipe.ingredients}"
+                th:text="${(ingredient.getAmount() +
+                                        ' ' + ingredient.uom.getDescription() +
+                                        ' - ' + ingredient.getDescription())}">1 Teaspoon of Sugar</li>
           </ul>
         </div>
       </div>
