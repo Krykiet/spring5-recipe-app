@@ -2,6 +2,7 @@ package com.krykiet.spring5recipeapp.controllers;
 
 import com.krykiet.spring5recipeapp.commands.RecipeCommand;
 import com.krykiet.spring5recipeapp.services.RecipeService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import static java.lang.Long.valueOf;
 
+@Slf4j
 @Controller
 public class RecipeController {
 
@@ -24,6 +26,7 @@ public class RecipeController {
         // content of the HTML in the model
         model.addAttribute("recipe", recipeService.findById(valueOf(id)));
         // selecting a template
+        log.debug("Showing recipe");
         return "recipe/show";
     }
 
@@ -49,4 +52,14 @@ public class RecipeController {
 
         return "redirect:/recipe/" + savedCommand.getId() + "/show";
     }
+
+    @RequestMapping("recipe/{id}/delete")
+    public String deleteById(@PathVariable String id) {
+        log.debug("Deleting id: " + id);
+
+        recipeService.deleteById(Long.valueOf(id));
+        return "redirect:/";
+    }
+
+
 }
