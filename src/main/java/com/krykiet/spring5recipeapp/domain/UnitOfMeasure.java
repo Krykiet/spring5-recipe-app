@@ -11,8 +11,6 @@ import java.util.Objects;
 
 @Getter
 @Setter
-@ToString
-@RequiredArgsConstructor
 @Entity
 public class UnitOfMeasure {
 
@@ -20,17 +18,4 @@ public class UnitOfMeasure {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String description;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        UnitOfMeasure that = (UnitOfMeasure) o;
-        return id != null && Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
 }

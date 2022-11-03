@@ -10,8 +10,6 @@ import java.util.Set;
 
 @Getter
 @Setter
-@ToString
-@RequiredArgsConstructor
 @Entity
 public class Recipe {
 
@@ -29,46 +27,34 @@ public class Recipe {
     @Lob
     private String directions;
 
-    // Cascade on the side of the recipe
-    // When we delete Notes we don't want to delete Recipe
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
+    private Set<Ingredient> ingredients = new HashSet<>();
+
+    @Lob
+    private Byte[] image;
+
+    @Enumerated(value = EnumType.STRING)
+    private Difficulty difficulty;
+
     @OneToOne(cascade = CascadeType.ALL)
     private Notes notes;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
-    @ToString.Exclude // target property for many Ingredient
-    private Set<Ingredient> ingredients = new HashSet<>();
-
-    @Lob // Binary large object - BLOB
-    private byte[] image;
-
-    @Enumerated(value = EnumType.STRING)
-    private Difficulty difficulty; // enum
-
-    // Need to set JoinTable to prevent H2 to create two tables: recipe_categories and category_recipes
-    // Also need to set (mappedBy = "categories" on the other side)
     @ManyToMany
-    @JoinTable(name = "recipe_category", // Name of table
-            joinColumns = @JoinColumn(name = "recipe_id"), // Name of columns
+    @JoinTable(name = "recipe_category",
+            joinColumns = @JoinColumn(name = "recipe_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
-    @ToString.Exclude // Name of columns
-    private Set<Category> categories = new HashSet<>(); // Other side mapped by this
+    private Set<Category> categories = new HashSet<>();
 
-    public Recipe addIngredient(Ingredient ingredient) {
+    public void setNotes(Notes notes) {
+        if (notes != null) {
+            this.notes = notes;
+            notes.setRecipe(this);
+        }
+    }
+
+    public Recipe addIngredient(Ingredient ingredient){
         ingredient.setRecipe(this);
         this.ingredients.add(ingredient);
         return this;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Recipe recipe = (Recipe) o;
-        return id != null && Objects.equals(id, recipe.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
     }
 }
