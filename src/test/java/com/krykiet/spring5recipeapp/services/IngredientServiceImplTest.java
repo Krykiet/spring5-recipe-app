@@ -62,6 +62,7 @@ public class IngredientServiceImplTest {
         recipe.addIngredient(ingredient3);
         Optional<Recipe> recipeOptional = Optional.of(recipe);
 
+        // setting up a Mock repository
         when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
 
         //then
