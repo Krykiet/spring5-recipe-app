@@ -2,23 +2,20 @@ package com.krykiet.spring5recipeapp.controllers;
 
 import com.krykiet.spring5recipeapp.commands.IngredientCommand;
 import com.krykiet.spring5recipeapp.commands.RecipeCommand;
-import com.krykiet.spring5recipeapp.domain.Recipe;
 import com.krykiet.spring5recipeapp.services.IngredientService;
 import com.krykiet.spring5recipeapp.services.RecipeService;
 import com.krykiet.spring5recipeapp.services.UnitOfMeasureService;
 import org.junit.Before;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
+import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.HashSet;
 
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -134,6 +131,19 @@ public class IngredientControllerTest {
                 )
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/recipe/2/ingredient/3/show"));
+
+    }
+
+    @Test
+    public void testDeleteIngredient() throws Exception {
+
+        //then
+        mockMvc.perform(get("/recipe/2/ingredient/3/delete")
+                )
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/recipe/2/ingredients"));
+
+        verify(ingredientService, times(1)).deleteById(anyLong(), anyLong());
 
     }
 }
