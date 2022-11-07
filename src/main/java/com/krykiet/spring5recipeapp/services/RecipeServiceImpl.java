@@ -4,6 +4,7 @@ import com.krykiet.spring5recipeapp.commands.RecipeCommand;
 import com.krykiet.spring5recipeapp.converters.RecipeCommandToRecipe;
 import com.krykiet.spring5recipeapp.converters.RecipeToRecipeCommand;
 import com.krykiet.spring5recipeapp.domain.Recipe;
+import com.krykiet.spring5recipeapp.exceptions.NotFoundException;
 import com.krykiet.spring5recipeapp.repositories.RecipeRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -40,15 +41,17 @@ public class RecipeServiceImpl implements RecipeService {
     public Recipe findById(Long l) {
 
         Optional<Recipe> recipeOptional = recipeRepository.findById(l);
-
+        // here we are changing HTTP status that coming back to the browser to 404 from 500
         if (!recipeOptional.isPresent()) {
-            throw new RuntimeException("Recipe Not Found!");
+            // this getting passed to View through controller
+            throw new NotFoundException("Recipe Not Found. For ID value: " + l);
         }
 
         return recipeOptional.get();
     }
 
     @Override
+    @Transactional
     public RecipeCommand findCommandById(Long l) {
         return recipeToRecipeCommand.convert(findById(l));
     }
@@ -64,7 +67,7 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public void deleteById(Long idToDelete ){
+    public void deleteById(Long idToDelete) {
         recipeRepository.deleteById(idToDelete);
     }
 }

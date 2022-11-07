@@ -1,12 +1,15 @@
 package com.krykiet.spring5recipeapp.controllers;
 
 import com.krykiet.spring5recipeapp.commands.RecipeCommand;
+import com.krykiet.spring5recipeapp.exceptions.NotFoundException;
 import com.krykiet.spring5recipeapp.services.RecipeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.Banner;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import static java.lang.Long.valueOf;
 
@@ -54,5 +57,20 @@ public class RecipeController {
 
         recipeService.deleteById(Long.valueOf(id));
         return "redirect:/";
+    }
+
+
+    @ResponseStatus(HttpStatus.NOT_FOUND) // otherwise it returns 200
+    @ExceptionHandler(NotFoundException.class)
+    public ModelAndView handleNotFound(Exception exception) { // Added Exception as parameter
+
+        log.error("Handling not found exception");
+        log.error(exception.getMessage());
+        ModelAndView modelAndView = new ModelAndView();
+
+        modelAndView.setViewName("404error");
+        modelAndView.addObject("exception", exception);
+
+        return modelAndView;
     }
 }
