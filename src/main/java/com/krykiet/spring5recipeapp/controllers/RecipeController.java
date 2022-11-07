@@ -25,7 +25,16 @@ public class RecipeController {
 
     @GetMapping("/recipe/{id}/show")
     public String showById(@PathVariable String id, Model model){
-
+        if (id == null) {
+            log.debug("Null value as id");
+        } else {
+            try {
+                Long l = Long.parseLong(id);
+                log.debug("DEBUG: @@ Number as an id, valid. @@");
+            } catch (NumberFormatException numberFormatException) {
+                log.debug("DEBUG: @@ ERROR: Not a number @@");
+            }
+        }
         model.addAttribute("recipe", recipeService.findById(Long.valueOf(id)));
         return "recipe/show";
     }
@@ -69,6 +78,20 @@ public class RecipeController {
         ModelAndView modelAndView = new ModelAndView();
 
         modelAndView.setViewName("404error");
+        modelAndView.addObject("exception", exception);
+
+        return modelAndView;
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST) // otherwise it returns 200
+    @ExceptionHandler(NumberFormatException.class)
+    public ModelAndView handleNumberFormatException(Exception exception) { // Added Exception as parameter
+
+        log.error("Handling Number Format Exception, java.lang exception message below");
+        log.error(exception.getMessage());
+        ModelAndView modelAndView = new ModelAndView();
+
+        modelAndView.setViewName("400error");
         modelAndView.addObject("exception", exception);
 
         return modelAndView;
